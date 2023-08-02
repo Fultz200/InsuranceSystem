@@ -8,7 +8,7 @@
     <div class="left">
       投保人统一社会信用代码：<input type="text" id="idNumber" name="idNumber" value="91430105MA4Q4UU10E"> &nbsp;&nbsp;
       投保人姓名：<input type="text" id="Name" name="Name" value="工保科技（浙江）有限公司"> 
-			<br> <br> 招标人统一社会信用代码：<input type="text" id="TendereeCode" name="TendereeCode" value="siDnioaZJK9"> &nbsp;&nbsp;
+		<br> <br> 招标人统一社会信用代码：<input type="text" id="TendereeCode" name="TendereeCode" value="siDnioaZJK9"> &nbsp;&nbsp;
       招标人名称：<input type="text" id="TendereeName" name="TendereeName" value="dv2rAgYOmLh"> 
       <br> <br> 项目标段编号：<input type="text" id="BidSectionCode" name="BidSectionCode" value="NGeaiVj5wol"> &nbsp;&nbsp;
       项目名称：<input type="text" id="ProjectName" name="ProjectName" value="y6Y10id9CaQ"> 
@@ -67,8 +67,7 @@
 		<h3 class="">2支付通知</h3>
 		<div class="left">
 			投保单号：<input type="text" id="proposalno1" name="proposalno1">
-			<br> <br> 地市：<select id="City1" class="platform"
-				name="City1">
+			<br> <br> 地市：<select id="City1" class="platform" name="City1">
 				<option selected="selected" value="341600">亳州</option>
 				<option selected="selected" value="341700">池州</option>
 				<option selected="selected" value="341800">宣城</option>
@@ -383,7 +382,81 @@ export default {
     msg: String
   }
 }
+
+{/* <script type="text/javascript"> */}
+$(function() {
+    $("#lipeiapply").click(
+            function() {
+                var policyno4 = $("#policyno4").val();
+                var claimName = $("#claimName").val();
+                var claimPhone = $("#claimPhone").val();
+                var cliaimReason = $("#cliaimReason").val();
+                var City4 = $("#City4").val();
+                if (!policyno4) {
+                    alert('请输入保单号');
+                    $("#policyno4").focus();
+                    return;
+                }
+
+                if (!claimName) {
+                    alert('请输入理赔人姓名');
+                    $("#claimName").focus();
+                    return;
+                }
+
+                if (!claimPhone) {
+                    alert('请输入理赔人联系方式');
+                    $("#claimPhone").focus();
+                    return;
+                }
+                if (!claimPhone.match(/^1(3|4|5|6|7|8|9)\d{9}$/)) {
+                    alert("手机号码格式不正确！");
+                    $("#claimPhone").focus();
+                    return;
+                }
+
+                if (!cliaimReason) {
+                    alert('请输入理赔原因');
+                    $("#cliaimReason").focus();
+                    return;
+                }
+                $(".result5").show();
+
+                $.ajax({
+                    type : 'post',
+                    url : 'PpeiPort',
+                    data : JSON.stringify({
+                        'policyno4' : policyno4,
+                        'claimName' : claimName,
+                        'claimPhone' : claimPhone,
+                        'cliaimReason' : cliaimReason,
+                        'City4' : City4
+                    }),
+                    datatType : 'json',
+                    contentType : 'application/json;charset=UTF-8',
+                    success : function(data) {
+                        var requestXml = data.requestXML;
+                        $(".apply5 .content").text(requestXml);
+
+                        var responseXml = data.resposeXML;
+                        $(".return5 .content").text(responseXml);
+                        if (data.status == "true"
+                                || data.status == "00000000") {
+                            $(".result5").text("理赔成功");
+                        } else {
+                            $(".result5").text(data.msg);
+                        }
+                    },
+                    error : function(data) {
+                        alert('系统异常')
+                    }
+                })
+            })
+})
+
 </script>
+
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
