@@ -1,15 +1,19 @@
 <template>
   <div>
-    <img alt="Vue logo" src="./assets/Logo.jpg" class = "img">
-    <hr />
+    <hr><img alt="Vue logo" src="./assets/Logo.jpg" class = "img">
+    <div class="titleText">电子保函测试系统</div><hr>
     <div>
       <!-- <testItem></testItem> -->
+      <OneToubao></OneToubao>
+    </div>
+    <div>
       <FiveLipei></FiveLipei>
     </div>
   </div>
 </template>
 
 <script>
+import OneToubao from './components/OneToubao.vue';
 import FiveLipei from './components/FiveLipei.vue';
 // import testItem from './components/testItem.vue';
 
@@ -18,6 +22,7 @@ export default {
   components: {
     // HelloWorld,
     // TwoZhifu,
+    OneToubao,
     FiveLipei,
     // testItem
   }
@@ -25,6 +30,17 @@ export default {
 </script>
 
 <style>
+.titleText {
+  color: rgb(10, 7, 7);
+  font-size: 50px;
+  line-height: 90px;
+  text-align: center;
+  width: 50%;
+  height: 100%;
+  float: right;
+}
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -50,22 +66,16 @@ export default {
   position: relative;
 }
 
-<!--分割线-->
-.tableTitle {
-    position: relative;
-    margin: 0 auto;
-    width: 600px;
-    height: 1px;
-    background-color: #000000;
-    text-align: center;
-    font-size: 16px;
-    color: rgb(0, 0, 0);
-  }
- .midText {
-    position: absolute;
-    left: 50%;
-    background-color: #ffffff;
-    padding: 0 15px;
-    transform: translateX(-50%) translateY(-50%);
-  }
+/* <!--分割线--> */
+/* hr {
+  border: none;
+  height: 2px;
+  background-color: #333;
+  color: #333;
+  text-align: center;
+} */
+/* .hr:after {
+  content: "";
+  font-size: 20px;
+} */
 </style>

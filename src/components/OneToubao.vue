@@ -1,18 +1,23 @@
 <template>
 	<!-- Consolas, 'Courier New', monospace -->
-<form id="FiveLipei">
-    <div id="lipei">
-        <h3>5理赔请求</h3>
-        <div class="triple" @submit.prevent="handleFive" @submit='alert'>
+<form id="OneLipei">
+    <div id="toubao">
+        <h3>1投保请求</h3>
+        <div class="triple" @submit.prevent="handleOne" @submit='alert'>
             <form>
-            <label>保单号：</label>
-            <input v-model="policyno4" placeholder="请输入">
+            投保人统一社会信用代码：<input v-model="idNumber" placeholder="请输入">
             <br> <br>
-            理赔人姓名：<input v-model="claimName" placeholder="请输入">
+            投保人姓名：<input v-model="name" placeholder="请输入">
             <br> <br>
-            理赔人联系方式：<input v-model="claimPhone" placeholder="请输入">
+            招标人统一社会信用代码：<input v-model="TendereeCode" placeholder="请输入">
             <br> <br>
-            理赔原因：<input v-model="claimReason" placeholder="请输入">
+            招标人名称：<input v-model="TendereeName" placeholder="请输入">
+            <br> <br>
+            项目标段编号：<input v-model="BidSectionCode" placeholder="请输入">
+            <br> <br>
+            项目名称：<input v-model="ProjectName" placeholder="请输入">
+            <br> <br>
+            投保人手机号：<input v-model="Mobile" placeholder="请输入">
             <br> <br>
             地市：<select v-model="city">
                 <option selected="selected" value="341600">亳州</option>
@@ -40,6 +45,10 @@
 				<option selected="selected" value="65100X">乌鲁木齐</option>
 			</select> 
             <br> <br> 
+            保费：<input v-model="sumPremium" placeholder="请输入">
+            <br> <br>
+            保额：<input v-model="sumAmount" placeholder="请输入">
+            <br> <br>
 				<button type="submit" class="button">提交</button>
 				<!-- <button type="submit">submit</button> -->
         </form>
@@ -81,11 +90,11 @@ export default {
 	data() {
 		return {
 			message :'<?xml version="1.0" encoding="utf-8"?><claimRequest><requestHead> <sign>1F1F4DEA13B5856A077D364B1BDC6835</sign> <requestUUID>65100X-1691047044383</requestUUID> </requestHead> <requestBody> <policyno>111</policyno> <claimName>公共资源交易中心</claimName> <claimPhone>17677179907</claimPhone> <cliaimReason>后台发起理赔</cliaimReason> </requestBody></claimRequest>',
-			policyno4 : '', claimName : '', claimPhone : '', claimReason : ''
+            idNumber:'',name:'',TendereeCode:'',TendereeName:'',BidSectionCode:'',ProjectName:'',Mobile:'',city:'',sumPremium:'',sumAmount:''
 		}
 	},
 	methods: {
-		handleFive() {
+		handleOne() {
 
 		},
 		alert() {
