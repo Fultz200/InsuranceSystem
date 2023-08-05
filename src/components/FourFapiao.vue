@@ -1,25 +1,25 @@
 <template>
 	<!-- Consolas, 'Courier New', monospace -->
-<div id="OneToubao" class="autoChange">
-    <div id="toubao">
-        <h3>1投保请求</h3>
-        <div class="triple" @submit.prevent="handleOne" @submit='loadData'>
+<form id="FourFapiao">
+    <div id="lipei">
+        <h3>4发票申请</h3>
+        <div class="triple" @submit.prevent="handleFive" @submit='handleThree'>
             <form>
-            投保人统一社会信用代码：<input v-model="idNumber" placeholder="请输入">
+            保单号：<input v-model="policyno2" placeholder="请输入">
             <br> <br>
-            投保人姓名：<input v-model="name" placeholder="请输入">
+            发票类型：<select v-model="InvoiceType">
+                <option selected="selected" value="3">纸质（专票）</option>
+				<option selected="selected" value="2">纸质（普票）</option>
+				<option selected="selected" value="1">电子（普票）</option>
+            </select>
             <br> <br>
-            招标人统一社会信用代码：<input v-model="TendereeCode" placeholder="请输入">
+            发票抬头：<input v-model="InvoiceHead" placeholder="请输入">
             <br> <br>
-            招标人名称：<input v-model="TendereeName" placeholder="请输入">
+            纳税人识别号：<input v-model="cuscCode" placeholder="请输入">
             <br> <br>
-            项目标段编号：<input v-model="BidSectionCode" placeholder="请输入">
+            电子邮箱：<input v-model="email" placeholder="请输入">
             <br> <br>
-            项目名称：<input v-model="ProjectName" placeholder="请输入">
-            <br> <br>
-            投保人手机号：<input v-model="Mobile" placeholder="请输入">
-            <br> <br>
-            地市：<select v-model="city">
+            地市：<select v-model="city2">
                 <option selected="selected" value="341600">亳州</option>
 				<option selected="selected" value="341700">池州</option>
 				<option selected="selected" value="341800">宣城</option>
@@ -44,12 +44,9 @@
 				<option selected="selected" value="654023">伊犁</option>
 				<option selected="selected" value="65100X">乌鲁木齐</option>
 			</select> 
-            <br> <br> 
-            保费：<input v-model="sumPremium" placeholder="请输入">
-            <br> <br>
-            保额：<input v-model="sumAmount" placeholder="请输入">
-            <br> <br>
-				<button type="submit" class="button">提交</button>
+            <br>
+			<button type="submit" class="button">提交</button>
+
 				<!-- <button type="submit">submit</button> -->
         </form>
 
@@ -77,7 +74,7 @@
 	</div>
     </div>
 
-</div>
+</form>
 <!-- <form @submit.prevent="myMethod" @submit="alert">
   <button type="submit">submit</button>
 </form> -->
@@ -85,33 +82,22 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
-	name:"OneToubao",
+	name:"FourFapiao",
 	data() {
 		return {
 			message :'<?xml version="1.0" encoding="utf-8"?><claimRequest><requestHead> <sign>1F1F4DEA13B5856A077D364B1BDC6835</sign> <requestUUID>65100X-1691047044383</requestUUID> </requestHead> <requestBody> <policyno>111</policyno> <claimName>公共资源交易中心</claimName> <claimPhone>17677179907</claimPhone> <cliaimReason>后台发起理赔</cliaimReason> </requestBody></claimRequest>',
-            idNumber:'',name:'',TendereeCode:'',TendereeName:'',BidSectionCode:'',ProjectName:'',Mobile:'',city:'',sumPremium:'',sumAmount:''
+			policyno4 : '', claimName : '', claimPhone : '', claimReason : ''
 		}
 	},
 	methods: {
-		handleOne() {
+		handleThree() {
 
 		},
 		alert() {
 			alert('理赔请求已提交')
-		},
-		loadData() {
-			axios.post('http://localhost:3000/posts', {
-            title: "POST请求",
-            author: "小M."
-        }).then((result) => {
-            console.log(result);
-        }).catch((err) => {
-            console.log(err);
-        });
-		},
-    }
+		}
+	}
 }
 </script>
 
@@ -135,13 +121,10 @@ export default {
 	border: 0;
 	float:left;
 }
-
 .autoChange {
 	min-height: 600px;
 	overflow:auto;
 }
-
-
 
 .printresult {
 	border: 1px solid #000;

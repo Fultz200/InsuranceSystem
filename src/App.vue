@@ -1,20 +1,23 @@
 <template>
   <div>
-    <hr><img alt="Vue logo" src="./assets/Logo.jpg" class = "img">
-    <div class="titleText">电子保函测试系统</div><hr>
-    <div>
-      <!-- <testItem></testItem> -->
-      <OneToubao></OneToubao>
-    </div>
-    <div>
-      <FiveLipei></FiveLipei>
-    </div>
+    <!-- <hr><img alt="Vue logo" src="./assets/Logo.jpg" class = "img"> -->
+    <hr><form class="titleText">电子保函测试系统</form><hr>
+    <div><OneToubao></OneToubao></div>
+    <div><hr><TwoZhifu></TwoZhifu></div>
+    <div><hr><ThreePigai></ThreePigai></div>
+    <div><hr><FourFapiao></FourFapiao></div>
+    <div><hr><FiveLipei></FiveLipei></div>
+    <div><hr><SixTuibao></SixTuibao></div>
   </div>
 </template>
 
 <script>
 import OneToubao from './components/OneToubao.vue';
+import TwoZhifu from './components/TwoZhifu.vue';
+import ThreePigai from './components/ThreePigai.vue';
+import FourFapiao from './components/FourFapiao.vue';
 import FiveLipei from './components/FiveLipei.vue';
+import SixTuibao from './components/SixTuibao.vue';
 // import testItem from './components/testItem.vue';
 
 export default {
@@ -23,7 +26,11 @@ export default {
     // HelloWorld,
     // TwoZhifu,
     OneToubao,
+    TwoZhifu,
+    ThreePigai,
+    FourFapiao,
     FiveLipei,
+    SixTuibao,
     // testItem
   }
 }
@@ -35,9 +42,6 @@ export default {
   font-size: 50px;
   line-height: 90px;
   text-align: center;
-  width: 50%;
-  height: 100%;
-  float: right;
 }
 
 
