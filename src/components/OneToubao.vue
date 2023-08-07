@@ -3,11 +3,11 @@
 <div id="OneToubao" class="autoChange">
     <div id="toubao">
         <h3>1投保请求</h3>
-        <div class="triple" @submit.prevent="handleOne" @submit='loadData'>
+        <div class="triple" @submit.prevent="" @submit='handleOne'>
             <form>
             投保人统一社会信用代码：<input v-model="idNumber" placeholder="请输入">
             <br> <br>
-            投保人姓名：<input v-model="name" placeholder="请输入">
+            投保人姓名：<input v-model="Name" placeholder="请输入">
             <br> <br>
             招标人统一社会信用代码：<input v-model="TendereeCode" placeholder="请输入">
             <br> <br>
@@ -58,7 +58,7 @@
 
 		<div class="triple">
 			<span style="color:red">请求报文</span>
-			<p style="white-space: pre-line;">{{ message }}</p>
+			<p style="white-space: pre-line;">{{ requestXML }}</p>
         <!-- <div class="printresult">
 			<div class="apply5">
 				<div style="color: red; font-weight: bold;">请求报文：</div>
@@ -73,7 +73,7 @@
 
 		<div class="triple">
 			<span style="color:red">响应报文</span>
-			<p style="white-space: pre-line;">{{ message }}</p>
+			<p style="white-space: pre-line;">{{ responseXML }}</p>
 	</div>
     </div>
 
@@ -90,14 +90,19 @@ export default {
 	name:"OneToubao",
 	data() {
 		return {
-			message :'<?xml version="1.0" encoding="utf-8"?><claimRequest><requestHead> <sign>1F1F4DEA13B5856A077D364B1BDC6835</sign> <requestUUID>65100X-1691047044383</requestUUID> </requestHead> <requestBody> <policyno>111</policyno> <claimName>公共资源交易中心</claimName> <claimPhone>17677179907</claimPhone> <cliaimReason>后台发起理赔</cliaimReason> </requestBody></claimRequest>',
-            idNumber:'',name:'',TendereeCode:'',TendereeName:'',BidSectionCode:'',ProjectName:'',Mobile:'',city:'',sumPremium:'',sumAmount:''
+			message:'',
+			message1:'<?xml version="1.0" encoding="utf-8"?><claimRequest><requestHead> <sign>1F1F4DEA13B5856A077D364B1BDC6835</sign> <requestUUID>65100X-1691047044383</requestUUID> </requestHead> <requestBody> <policyno>111</policyno> <claimName>公共资源交易中心</claimName> <claimPhone>17677179907</claimPhone> <cliaimReason>后台发起理赔</cliaimReason> </requestBody></claimRequest>',
+            requestUUID:'1111111',
+			idNumber:'',Name:'',TendereeCode:'',TendereeName:'',BidSectionCode:'',ProjectName:'',Mobile:'',city:'',sumPremium:'',sumAmount:'',
+			requestXML: '',
+			responseXML: '',
+			time:'',
+			resultFlag:true,
+			resultMessage:'投保成功',
+			proposalNo:'投保单号',
 		}
 	},
 	methods: {
-		handleOne() {
-
-		},
 		alert() {
 			alert('理赔请求已提交')
 		},
@@ -111,6 +116,72 @@ export default {
             console.log(err);
         });
 		},
+		handleOne() {
+			var request = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" 
+			+ " <insureRequest>" 
+			+ "       <requestHead>"
+			+ "            <requestUUID>"        + this.requestUUID      +     "</requestUUID>" 
+			+ "            <sign>"               + "     "          +     "</sign>"
+			+ "       </requestHead>" 
+			+ "       <requestBody>"   
+			+ "         <applicantInfo>" 
+			+ "             <name>"              + this.Name             +    "</name>"
+			+ "             <mobile>"            + this.Mobile           +    "</mobile>"
+			+ "             <idNumber>"          + this.idNumber         +    "</idNumber>"
+			+ "             <ProjectName>"       + this.ProjectName      +    "</ProjectName>" 
+			+ "             <BidSectionCode>"    + this.BidSectionCode   +    "</BidSectionCode>" 
+			+ "             <TendereeName>"      + this.TendereeName     +    "</TendereeName>"
+			+ "             <TendereeCode>"      + this.TendereeCode     +    "</TendereeCode>" 
+			+ "        </applicantInfo>"
+			+ "        <policyInfo>" 
+			+ "           <sumPremium>"          + this.sumPremium       +    "</sumPremium>"
+			+ "           <sumAmount>"           + this.sumAmount        +    "</sumAmount>"
+			+ "<endorseText>一、本特别约定，作为投标保证保险保单的有效组成部分，与保险合同、保单或其它保险凭证具有同等法律效力。二、保险单生效时间为投保项目投标截止时间，保险期间为投保项目《招标文件》中载明的投标有效期。三、投保人违反所投项目《招标文件》规定要求导致投标保证金不予退还或罚没情形的均属于本保单保险责任。四、退保处理1.开标前投保人自愿放弃投保或项目发生中止、暂停的，可进行退保；2.开标前项目发生流标、终止的，可进行退保；3.开标后项目发生流标的，可进行退保；4.除上述 3 种情形外均不予退保。5.投保人办理退保事宜，满足退保条件的，保险费全额退还。五、线下理赔材料提供如下：1.索赔申请书；2.招标文件和投标文件；3.投保人违约证明材料。六、保险公司应在收到索赔申请书和相关材料后 10 个工作日内完成理赔。七、保险人向被保险人赔偿后，保险人享有向投保人追偿的权利。</endorseText>"
+			+ "       </policyInfo>" 
+			+ "       </requestBody>"
+			+ " </insureRequest>";
+
+			this.requestXML = request;
+
+			this.getTime()
+			var response = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" 
+			+ " <insureRequest>" 
+			+ "       <requestHead>"
+			+ "            <requestUUID>"        + this.requestUUID      +     "</requestUUID>" 
+			+ "            <sign>"               + "     "          +     "</sign>"
+			+ "       </requestHead>" 
+			+ "       <requestBody>"
+			+ "             <responseTime>"      + this.time             +    "</responseTime>"
+			+ "             <resultFlag>"        + this.resultFlag       +    "</resultFlag>"
+			+ "             <resultMessage>"     + this.resultMessage    +    "</resultMessage>"
+			+ "             <proposalNo>"        + this.proposalNo       +    "</proposalNo>" 
+			+ "       </requestBody>"
+			+ " </insureRequest>";
+
+			this.responseXML = response;
+		},
+		getTime() {
+			var date = new Date();
+			//年
+			var year = date.getFullYear();
+			//月
+			var month = date.getMonth() + 1;
+			//日
+			var strDate = date.getDate();
+			//时
+			var hour = date.getHours();
+			//分
+			var minute = date.getMinutes();
+			//秒
+			var second = date.getSeconds();
+			month = month > 9 ? month : '0' + month
+			strDate = strDate > 9 ? strDate : '0' + strDate
+			hour = hour > 9 ? hour : '0' + hour
+			minute = minute > 9 ? minute : '0' + minute
+			second = second > 9 ? second : '0' + second
+			var newdata = year + '-' + month + '-' + strDate + ' ' + hour + ':' + minute + ':' + second
+			this.time = newdata;
+		}
     }
 }
 </script>

@@ -3,7 +3,7 @@
 <form id="TwoZhifu">
     <div id="lipei">
         <h3>2支付通知</h3>
-        <div class="triple" @submit.prevent="handleFive" @submit='handleThree'>
+        <div class="triple" @submit.prevent="handleFive" @submit='handleTwo'>
             <form>
             投保单号：<input v-model="proposalno1" placeholder="请输入">
             <br> <br>
@@ -38,7 +38,7 @@
             <button type="download" class="button">保函下载</button>
 			<button type="download" class="button">去支付</button>
 
-				<!-- <button type="submit">submit</button> -->
+			<!-- <button type="submit">submit</button> -->
         </form>
 
             <!-- <div class="result5" style="display: none">理赔中...</div> -->
@@ -46,22 +46,22 @@
 
 		<div class="triple">
 			<span style="color:red">请求报文</span>
-			<p style="white-space: pre-line;">{{ message }}</p>
+			<p style="white-space: pre-line;">{{ requestXML }}</p>
         <!-- <div class="printresult">
 			<div class="apply5">
 				<div style="color: red; font-weight: bold;">请求报文：</div>
-				<div class="content"><br><br><br><br></div>
+			<div class="content"><br><br><br><br></div>
 			</div>
 			<div class="return5">
 				<div style="color: red; font-weight: bold;">响应报文：</div>
-				<div class="content"><br><br><br><br></div>
+			<div class="content"><br><br><br><br></div>
 			</div>
 		</div> -->
     </div>
 
 		<div class="triple">
 			<span style="color:red">响应报文</span>
-			<p style="white-space: pre-line;">{{ message }}</p>
+			<p style="white-space: pre-line;">{{ responseXML }}</p>
 	</div>
     </div>
 
@@ -78,12 +78,78 @@ export default {
 	data() {
 		return {
 			message :'<?xml version="1.0" encoding="utf-8"?><claimRequest><requestHead> <sign>1F1F4DEA13B5856A077D364B1BDC6835</sign> <requestUUID>65100X-1691047044383</requestUUID> </requestHead> <requestBody> <policyno>111</policyno> <claimName>公共资源交易中心</claimName> <claimPhone>17677179907</claimPhone> <cliaimReason>后台发起理赔</cliaimReason> </requestBody></claimRequest>',
-			policyno4 : '', claimName : '', claimPhone : '', claimReason : ''
+			requestUUID:'',
+			creSign:'',
+			proposalNo:'',
+			sumPremium:'',
+			sumAmount:'',
+			paymentTransactionNo:'',
+			paymentDateTime:'',
+			policyno4 : '', claimName : '', claimPhone : '', claimReason : '',resultFlag:'',
+			requestXML:'',
+			responseXML:'',
+			downLoadUrl:'',
+			guaranteeUrl:'',
 		}
 	},
 	methods: {
-		handleThree() {
+		handleTwo() {
+			var request = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" 
+			+ " <payNoticeRequest>" 
+				+ "    <requestHead>"
+					+ "         <requestUUID>"            + this.requestUUID            +     "</requestUUID>" 
+					+ "         <sign>"                   + this.creSign                +     "</sign>"
+					+ "    </requestHead>" 
+					+ "    <requestBody>"   
+						+ "         <proposalNo>"             + this.proposalNo             +    "</proposalNo>"
+						+ "         <sumPremium>"             + this.sumPremium             +    "</sumPremium>"
+						+ "         <sumAmount>"              + this.sumAmount              +    "</sumAmount>" 
+						+ "          <paymentTransactionNo>"   + this.paymentTransactionNo   +    "</paymentTransactionNo>"
+						+ "         <paymentDateTime>"        + this.paymentDateTime        +    "</paymentDateTime>" 
+					+ "    </requestBody>"
+					+ " </payNoticeRequest>";
+			this.requestXML = request;
 
+			this.getTime()
+			var response = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" 
+			+ " <insureRequest>" 
+			+ "       <requestHead>"
+			+ "            <requestUUID>"        + this.requestUUID      +     "</requestUUID>" 
+			+ "            <sign>"               + "     "          +     "</sign>"
+			+ "       </requestHead>" 
+			+ "       <requestBody>"
+			+ "             <policyno>"          + this.policyno4        +    "</policyno>"
+			+ "             <responseTime>"      + this.time             +    "</responseTime>"
+			+ "             <resultFlag>"        + this.resultFlag       +    "</resultFlag>"
+			+ "             <resultMessage>"     + this.resultMessage    +    "</resultMessage>"
+			+ "             <downLoadUrl>"       + this.downLoadUrl      +    "</downLoadUrl>"
+			+ "             <guaranteeUrl>"      + this.guaranteeUrl     +    "</guaranteeUrl>" 
+			+ "       </requestBody>"
+			+ " </insureRequest>";
+
+			this.responseXML = response;
+		},
+		getTime() {
+			var date = new Date();
+			//年
+			var year = date.getFullYear();
+			//月
+			var month = date.getMonth() + 1;
+			//日
+			var strDate = date.getDate();
+			//时
+			var hour = date.getHours();
+			//分
+			var minute = date.getMinutes();
+			//秒
+			var second = date.getSeconds();
+			month = month > 9 ? month : '0' + month
+			strDate = strDate > 9 ? strDate : '0' + strDate
+			hour = hour > 9 ? hour : '0' + hour
+			minute = minute > 9 ? minute : '0' + minute
+			second = second > 9 ? second : '0' + second
+			var newdata = year + '-' + month + '-' + strDate + ' ' + hour + ':' + minute + ':' + second
+			this.time = newdata;
 		},
 		alert() {
 			alert('理赔请求已提交')

@@ -58,7 +58,7 @@
 
 		<div class="triple">
 			<span style="color:red">请求报文</span>
-			<p style="white-space: pre-line;">{{ message }}</p>
+			<p style="white-space: pre-line;">{{ requestXML }}</p>
         <!-- <div class="printresult">
 			<div class="apply5">
 				<div style="color: red; font-weight: bold;">请求报文：</div>
@@ -73,7 +73,7 @@
 
 		<div class="triple">
 			<span style="color:red">响应报文</span>
-			<p style="white-space: pre-line;">{{ message }}</p>
+			<p style="white-space: pre-line;">{{ responseXML }}</p>
 	</div>
     </div>
 
@@ -90,12 +90,41 @@ export default {
 	data() {
 		return {
 			message :'<?xml version="1.0" encoding="utf-8"?><claimRequest><requestHead> <sign>1F1F4DEA13B5856A077D364B1BDC6835</sign> <requestUUID>65100X-1691047044383</requestUUID> </requestHead> <requestBody> <policyno>111</policyno> <claimName>公共资源交易中心</claimName> <claimPhone>17677179907</claimPhone> <cliaimReason>后台发起理赔</cliaimReason> </requestBody></claimRequest>',
+			requestXML:'',
+			responseXML:'',
 			policyno4 : '', claimName : '', claimPhone : '', claimReason : ''
 		}
 	},
 	methods: {
 		handleThree() {
-
+			var request = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" 
+			+ " <correctRequest>" 
+					+ "       <requestHead>"
+					+ "            <sign>createSignXXX</sign>"
+					+ "            <requestUUID>" + this.requestUUID +  "</requestUUID>" 			
+					+ "       </requestHead>" 
+					+ "       <requestBody>"   
+					+ "           <isPtextFlag>1</isPtextFlag>"
+					+ "           <endorseText>" + this.ENDORSE_TEXT + "</endorseText>"
+					+ "           <policyno>" + this.policyno + "</policyno>" 
+					+ "        <correctInfo>" 
+					+ "           <dateInfo>" 
+					+ "              <stratDate>" + this.stratDate + "</stratDate>"
+					+ "              <endDate>" + this.endDate + "</endDate>" 
+					+ "              <tender>90</tender>"
+					+ "          </dateInfo>"
+					+ "          <insuredInfo>" 
+					+ "             <name>" + name +  "</name>"
+					+ "             <idNumber>" + this.idNumber +  "</idNumber>" 
+					+ "         </insuredInfo>"  
+					+ "         <baqRequiredInfo>"
+					+ "            <projectName>" + this.projectName +  "</projectName>"
+					+ "            <projectNo>" + this.projectNo +  "</projectNo>"
+					+ "        </baqRequiredInfo>"
+					+ "       </correctInfo>"
+					+ "     </requestBody>" 
+					+ " </correctRequest>";
+			this.requestXML = request;
 		},
 		alert() {
 			alert('理赔请求已提交')
